@@ -7,6 +7,8 @@ import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { ServiceItem } from "@/components/service-item";
 import PhoneItem from "@/components/phone-item";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { SidebarSheet } from "@/components/sidebar-sheet";
 
 type BarberShop = {
   params: {
@@ -49,13 +51,19 @@ export default async function BarberShop({ params: { id } }: BarberShop) {
           </Link>
         </Button>
 
-        <Button
-          variant="secondary"
-          size="icon"
-          className="absolute right-4 top-4"
-        >
-          <MenuIcon />
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute right-4 top-4"
+            >
+              <MenuIcon />
+            </Button>
+          </SheetTrigger>
+
+          <SidebarSheet />
+        </Sheet>
       </div>
 
       <div className="border-b border-solid p-5">
