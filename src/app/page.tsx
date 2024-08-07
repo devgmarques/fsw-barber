@@ -4,7 +4,6 @@ import { SearchIcon } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { quickSearchOptions } from "@/constants/search-options";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { BookingItem } from "@/components/booking-item";
@@ -80,17 +79,6 @@ export default async function Home() {
           ))}
         </div>
       </div>
-
-      <footer className="mt-6">
-        <Card>
-          <CardContent className="px-5 py-6">
-            <p className="text-sm text-gray-400">
-              &copy; 2024 Copyright{" "}
-              <span className="font-bold">FSW Barber</span>
-            </p>
-          </CardContent>
-        </Card>
-      </footer>
     </div>
   );
 }

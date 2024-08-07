@@ -1,6 +1,9 @@
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
+
 import "./globals.css";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Toaster richColors />
+        {children}
+
+        <Footer />
+      </body>
     </html>
   );
 }

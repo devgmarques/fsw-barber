@@ -6,6 +6,7 @@ import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { ServiceItem } from "@/components/service-item";
+import PhoneItem from "@/components/phone-item";
 
 type BarberShop = {
   params: {
@@ -81,6 +82,12 @@ export default async function BarberShop({ params: { id } }: BarberShop) {
         <div className="space-y-3">
           {barbershop.services.map((service) => (
             <ServiceItem key={service.id} service={service!} />
+          ))}
+        </div>
+
+        <div className="space-y-3 p-5">
+          {barbershop.phones.map((phone) => (
+            <PhoneItem key={phone} phone={phone} />
           ))}
         </div>
       </div>
