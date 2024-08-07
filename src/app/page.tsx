@@ -1,16 +1,23 @@
-import { BarberShopItem } from "@/components/barbershop-item";
-import { Header } from "@/components/header";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { prisma } from "@/lib/prisma";
-import { SearchIcon } from "lucide-react";
 import Image from "next/image";
+import { SearchIcon } from "lucide-react";
 
+import { prisma } from "@/lib/prisma";
+import { quickSearchOptions } from "@/constants/search-options";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/header";
+import { BookingItem } from "@/components/booking-item";
+import { BarberShopItem } from "@/components/barbershop-item";
+
+// TODO => receber agendamento como props
 export default async function Home() {
   const barbersShops = await prisma.barberShop.findMany({});
+  const popularBarbersShops = await prisma.barberShop.findMany({
+    orderBy: {
+      name: "desc",
+    },
+  });
 
   return (
     <div>
@@ -28,6 +35,20 @@ export default async function Home() {
           </Button>
         </div>
 
+        <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+          {quickSearchOptions.map((item) => (
+            <Button key={item.title} className="gap-2" variant="secondary">
+              <Image
+                src={item.imageUrl}
+                alt={item.title}
+                width={16}
+                height={16}
+              />
+              {item.title}
+            </Button>
+          ))}
+        </div>
+
         <div className="h-150px relative mt-6 h-[150px] w-full">
           <Image
             alt="Agende nos melhore fsw barber"
@@ -37,32 +58,7 @@ export default async function Home() {
           />
         </div>
 
-        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
-          Agendamentos
-        </h2>
-
-        <Card>
-          <CardContent className="flex justify-between p-0">
-            <div className="flex flex-col gap-2 py-5 pl-5">
-              <Badge className="w-fit">Confirmado</Badge>
-              <h3 className="font-semibold">Corte de cabelo</h3>
-
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png" />
-                </Avatar>
-
-                <p className="text-sm">Barberia</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center border-l-2 border-solid px-5">
-              <p className="text-sm">Agosto</p>
-              <p className="text-2xl">05</p>
-              <p className="text-sm">20:00</p>
-            </div>
-          </CardContent>
-        </Card>
+        <BookingItem />
 
         <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
           Recomendados
@@ -73,7 +69,28 @@ export default async function Home() {
             <BarberShopItem barberShop={item} key={item.id} />
           ))}
         </div>
+
+        <h2 className="mb-3 mt-6 text-xs font-bold uppercase text-gray-400">
+          Populares
+        </h2>
+
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {popularBarbersShops.map((item) => (
+            <BarberShopItem barberShop={item} key={item.id} />
+          ))}
+        </div>
       </div>
+
+      <footer className="mt-6">
+        <Card>
+          <CardContent className="px-5 py-6">
+            <p className="text-sm text-gray-400">
+              &copy; 2024 Copyright{" "}
+              <span className="font-bold">FSW Barber</span>
+            </p>
+          </CardContent>
+        </Card>
+      </footer>
     </div>
   );
 }
