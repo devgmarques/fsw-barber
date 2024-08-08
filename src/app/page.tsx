@@ -1,22 +1,21 @@
-import Image from "next/image";
-import { SearchIcon } from "lucide-react";
+import Image from 'next/image'
 
-import { prisma } from "@/lib/prisma";
-import { quickSearchOptions } from "@/constants/search-options";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/header";
-import { BookingItem } from "@/components/booking-item";
-import { BarberShopItem } from "@/components/barbershop-item";
+import { prisma } from '@/lib/prisma'
+import { quickSearchOptions } from '@/constants/search-options'
+import { Button } from '@/components/ui/button'
+import { Header } from '@/components/header'
+import { BookingItem } from '@/components/booking-item'
+import { BarberShopItem } from '@/components/barbershop-item'
+import { Search } from '@/components/search'
 
 // TODO => receber agendamento como props
 export default async function Home() {
-  const barbersShops = await prisma.barberShop.findMany({});
+  const barbersShops = await prisma.barberShop.findMany({})
   const popularBarbersShops = await prisma.barberShop.findMany({
     orderBy: {
-      name: "desc",
+      name: 'desc',
     },
-  });
+  })
 
   return (
     <div>
@@ -28,10 +27,7 @@ export default async function Home() {
         <p>Terça-feira, 06 de agosto.</p>
 
         <div className="mt-6 flex items-center gap-2">
-          <Input placeholder="Faça sua busca ..." />
-          <Button size="icon">
-            <SearchIcon />
-          </Button>
+          <Search />
         </div>
 
         <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
@@ -80,5 +76,5 @@ export default async function Home() {
         </div>
       </div>
     </div>
-  );
+  )
 }
