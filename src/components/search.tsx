@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from './ui/form'
 import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
-  search: z.string().trim().min(1, {
+  title: z.string().trim().min(1, {
     message: 'Digite algo para buscar',
   }),
 })
@@ -25,8 +25,8 @@ export function Search() {
 
   const router = useRouter()
 
-  function onSubmit({ search }: FormSchema) {
-    router.push(`/barbershops?title=${search}`)
+  function onSubmit({ title }: FormSchema) {
+    router.push(`/barbershops?title=${title}`)
   }
 
   return (
@@ -37,7 +37,7 @@ export function Search() {
       >
         <FormField
           control={form.control}
-          name="search"
+          name="title"
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>

@@ -7,6 +7,7 @@ import { Header } from '@/components/header'
 import { BookingItem } from '@/components/booking-item'
 import { BarberShopItem } from '@/components/barbershop-item'
 import { Search } from '@/components/search'
+import Link from 'next/link'
 
 // TODO => receber agendamento como props
 export default async function Home() {
@@ -32,14 +33,21 @@ export default async function Home() {
 
         <div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
           {quickSearchOptions.map((item) => (
-            <Button key={item.title} className="gap-2" variant="secondary">
-              <Image
-                src={item.imageUrl}
-                alt={item.title}
-                width={16}
-                height={16}
-              />
-              {item.title}
+            <Button
+              key={item.title}
+              className="gap-2"
+              variant="secondary"
+              asChild
+            >
+              <Link href={`/barbershops?service=${item.title}`}>
+                <Image
+                  src={item.imageUrl}
+                  alt={item.title}
+                  width={16}
+                  height={16}
+                />
+                {item.title}
+              </Link>
             </Button>
           ))}
         </div>
